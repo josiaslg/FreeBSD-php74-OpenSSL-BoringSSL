@@ -1,0 +1,40 @@
+--- /usr/ports/security/php74-openssl/work/php-7.4.30/ext/openssl/openssl.c     2022-06-07 05:38:20.000000000 -0300
++++ /root/openssl.c     2022-08-02 17:35:39.999151000 -0300
+@@ -1517,7 +1517,6 @@
+        REGISTER_LONG_CONSTANT("PKCS7_NOSIGS", PKCS7_NOSIGS, CONST_CS|CONST_PERSISTENT);
+
+        REGISTER_LONG_CONSTANT("OPENSSL_PKCS1_PADDING", RSA_PKCS1_PADDING, CONST_CS|CONST_PERSISTENT);
+-       REGISTER_LONG_CONSTANT("OPENSSL_SSLV23_PADDING", RSA_SSLV23_PADDING, CONST_CS|CONST_PERSISTENT);
+        REGISTER_LONG_CONSTANT("OPENSSL_NO_PADDING", RSA_NO_PADDING, CONST_CS|CONST_PERSISTENT);
+        REGISTER_LONG_CONSTANT("OPENSSL_PKCS1_OAEP_PADDING", RSA_PKCS1_OAEP_PADDING, CONST_CS|CONST_PERSISTENT);
+
+@@ -4144,10 +4143,6 @@
+                        }
+                        break;
+                case EVP_PKEY_DSA:
+-               case EVP_PKEY_DSA1:
+-               case EVP_PKEY_DSA2:
+-               case EVP_PKEY_DSA3:
+-               case EVP_PKEY_DSA4:
+                        {
+                                DSA *dsa = EVP_PKEY_get0_DSA(pkey);
+                                if (dsa != NULL) {
+@@ -4321,8 +4316,6 @@
+                return NULL;
+        }
+
+-       BN_with_flags(priv_key_const_time, priv_key, BN_FLG_CONSTTIME);
+-
+        if (!BN_mod_exp_mont(pub_key, g, priv_key_const_time, p, ctx, NULL)) {
+                BN_free(pub_key);
+                php_openssl_store_errors();
+@@ -4875,9 +4868,6 @@
+                        }
+                        break;
+                case EVP_PKEY_DSA:
+-               case EVP_PKEY_DSA2:
+-               case EVP_PKEY_DSA3:
+-               case EVP_PKEY_DSA4:
+                        {
+                                DSA *dsa = EVP_PKEY_get0_DSA(pkey);
+                                ktype = OPENSSL_KEYTYPE_DSA;
